@@ -1,0 +1,308 @@
+\documentclass[a4 paper,12pt]{report}
+\usepackage[14pt]{extsizes}
+\usepackage[cp1251]{inputenc}
+\usepackage[ukrainian]{babel}
+\usepackage{amsfonts,amsmath}
+\usepackage{makeidx,bezier,latexsym,epsfig,layout}
+\usepackage{graphics, graphicx}
+%\documentclass{article}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+\DeclareGraphicsRule{.jpeg}{bmp}{}{} \pagestyle{plain}
+\textwidth 16 cm%\textheight 22.5 cm
+\textheight 24.7 cm%\textwidth 16 cm
+\topmargin -1.5 cm%\topmargin -1 cm
+\evensidemargin 0 cm%\evensidemargin 0 cm
+\oddsidemargin 0 cm%\oddsidemargin 0 cm
+%Настройка стилей
+\pgfplotsset{model/.style = {blue, samples = 100}}
+\pgfplotsset{experiment/.style = {red}}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\newtheorem{theorem}{Теорема}[chapter]
+\newtheorem{colaborary}[theorem]{Наслідок}
+\newtheorem{algorithm}[theorem]{Алгоритм}
+\newtheorem{determination}[theorem]{Означення}
+\newtheorem{example}[theorem]{Приклад}
+\newtheorem{lema}[theorem]{Лема}
+\newtheorem{remark}[theorem]{Зауваження}
+\renewcommand{\chaptername}{Розділ}
+\renewcommand{\thepart}{\thechapter\arabic{Розділ}.}
+\renewcommand{\thesection}{\thechapter.\arabic{section}.}
+\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
+\renewcommand{\figurename}{Рис.}
+\renewcommand{\tablename}{Таблиця}
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%титульна сторінка
+\titlepage
+\begin{center}
+\large {Львівський національний університет імені Івана Франка}\\
+ \normalsize{Факультет прикладної математики та інформатики}\\
+  \normalsize{Кафедра обчислювальної математики}\\
+\end{center}
+\vspace*{0.5cm}
+\begin{center}
+\Large{\textbf{Звіт}}\\
+\large{з курсу "Методи регуляризації для розв'язування обернених задач" \\ }
+\large{на тему: \\}
+\Large{\textbf{Чисельне розв'язування задачі Коші для рівняння Лапласа в 2-вимірній двозв'язній області непрямим методом інтегральних рівнянь}}
+\end{center}
+\normalsize
+\vspace*{1cm}\hspace*{11cm}Виконали\\
+\hspace*{11cm}студенти групи ПМп-51 \\
+\hspace*{11cm}Гладиш Роман\\
+\hspace*{11cm}Канафоцький Тарас\\
+\\ \\
+\hspace*{11cm}Наукові консультанти:\\
+\hspace*{11cm}проф. Хапко Р.С.\\
+\hspace*{11cm}ас. Борачок І.В.\\
+\\
+\centerline{Львів - 2017}
+
+%!!!!!!!!!!!!!!!!!!!!!!!!сторінка змісту!!!!!!!!!!!!!!!!!!!!!
+\tableofcontents
+\newpage
+\chapter*{Вступ}  \addcontentsline{toc}{chapter}{Вступ}
+\normalsize
+\hspace*{\parindent} \hspace*{\parindent} Впродовж останніх років все більшої популярності набувають наближені, чисельні та машинні методи розвязування інтегральних рівнянь, оскільки її застосування дозволяє отримати ефективні математичні описи багатьох задач. Накриклад, за допомогою інтегральних рівнянь аналізують процеси в динамічних системах, визначають імпульсну функцію лінійної системи, розв'язують задачі оптимальної фільтрації, задачі відновлення сигналу і тд.\\
+\hspace*{\parindent}Важливу роль у розв'язуванні ряду задач математичної фізики відіграє метод граничних інтегральних рівнянь, за допомогою якого зводять відповідну диференціальну задачу до еквівалентного інтегрального рівняння. Тому складає інтерес застосування ефективних методів для чисельного розв'язування  отриманого інтегрального рівняння. Тому зазначимо, що метод граничних інтегральних рівнянь ефективніший за метод скінченних різниць, метод скінченних елементів та інші, оскільки володіє такими перевагами як : \begin{itemize}
+                                 \item розмірність задачі зменшується на 1;
+                                 \item метод застосовний для областей з границями довільної форми;
+                                 \item застосовний у випадку необмежених областей.
+                               \end{itemize}
+ Метою цієї роботи є чисельне розв'язування зовнішньої задачі Коші для рівняння Лаплас у двозв'язній області непрямим методом граничних інтегральних рівнянь. Таким чином ми зведемо задачу у двовимірній області до задачі з на одиницю меншою розмірностю. Також однією з переваг цього методу є можливість отримати розв'язок високої якості без великих чисельних затрат.
+\newpage
+\chapter{Дослідження задачі}
+\section{Постановка задачі Коші для рівняння Лапласа}
+ \hspace*{\parindent} Нехай в обмеженій області $D_2 \subset R^2$ з границею $\Gamma_2$ міститься однозв'язна обмежена область $D_1 \subset R^2$ з границею $\Gamma_1 \in C^2$, така що $\overline{D_1} \subset R^2$. Область $D_1$ називатимемо внутрішнім включенням області $D_2$. Також позначимо через $D := D_2 \backslash \overline{D_1}$. Потрібно знайти регулярну в області $D$ функцію $u \in C^2(D)\bigcap C(\overline{D})$ , яка задовольняє рівняння Лапласа
+\begin{equation}
+\label{Laplace}
+        \Delta u = 0 \quad \textup{в } D
+\end{equation}
+і відповідні граничні умови Діріхле і Неймана
+\begin{equation}
+        u = f \quad \textup{на } D
+\end{equation}
+\begin{equation}
+\label{Neuman}
+        \frac{\partial u}{\partial \nu} = g \quad \textup{на } \Gamma_2,
+\end{equation}
+а також $ \frac{\partial u}{\partial \nu}, u \textup{ на } \Gamma_1$.
+
+\section{Потенціали простого і подвійного шару та їх властивості}
+\hspace*{\parindent} Нехай бласть $D_1$ внутрішнє включення області $D_2$ з границею $\Gamma_1$  з класу $C^p \quad (p\geq2)$. Для функції $\varphi \in C(\Gamma_1)$ визначимо функції
+\begin{equation}
+\label{potential1}
+u(x) = \int\limits_{\Gamma_1} \, \varphi(y)\Phi(x,y) ds(y) , \quad x \in D_2\setminus\Gamma_1
+\end{equation}
+та
+\begin{equation}
+\label{potential2}
+\upsilon(x) = \int\limits_{\Gamma_1} \, \varphi(y)\frac{\Phi(x,y)}{\nu(y)} ds(y) , \quad x \in D_2\setminus\Gamma_1
+\end{equation}
+як модифіковані потенціали простого та подвійного шару з густиною $\varphi $ відповідно.\\
+\hspace*{\parindent} Тут $\Phi$ фундаментальний розв'язок рівняння Лапласа (\ref{Laplace}) в обмеженій області $D$
+\begin{equation}
+\begin{split}
+\label{fundSol}
+    \Phi(x,y) & := -\frac{1}{2\pi}\ln |x-y| \\
+    |x-y| & =\sqrt{(x_1-y_1)^2 + (x_2-y_2)^2}
+\end{split}
+\end{equation}
+ $\nu$ - внутрішня нормаль до границі внутрішнього включення $\Gamma_1$.\\
+\hspace*{\parindent} На основі класичних результатів \cite{Kress} та із врахуванням властивостей фундаментального розв'язку (\ref{fundSol}), для потенціалів (\ref{potential1}) та (\ref{potential1}) справедливі наступні твердження.
+\begin{theorem}
+\label{theorem 1}
+Нехай $\Gamma_0 \in C^p \quad (p\geq2)$ і $\varphi \in C(\Gamma_1)$. Тоді потенціал простого шару (\ref{potential1}) з густиною $\varphi$ є регулярною функцією в області $D$ і задовольняє оцінку
+$$
+\| u\|_{\infty,D_2} \leq C \|\varphi\|_{\infty,\Gamma_1},
+$$
+де $\| \cdot\|_{\infty}$ позначає норму в просторі неперервних функцій, $C > 0$ - деяка константа.На границі $\Gamma_1$ маємо наступне представлення
+$$
+u(x) = \int\limits_{\Gamma_1} \, \varphi(y)\Phi(x,y) ds(y) , \quad x \in \Gamma_1.
+$$
+\end{theorem}
+\begin{theorem}
+\label{theorem 2}
+ Потенціал подвійного шару (\ref{potential2}) з густиною $\varphi \in C(\Gamma_1)$ можна неперервно продовжити з області $D_2$ в $\overline{D_1}$ і з $D_2\backslash \overline{D_1}$ в $\overline{D_1}$ із наступними значеннями на границі $\Gamma_1$
+ $$
+\frac{\partial u}{\partial \nu}(x) = \int\limits_{\Gamma_1} \, \varphi(y)\frac{\partial^2\Phi(x,y)}{\partial \nu(x) \partial \nu(x)} ds(y) , \quad x \in \Gamma_1.
+$$
+Мають місце наступні оцінки :
+$$
+\| \upsilon\|_{\infty,\overline{D_1}} \leq C \|\varphi\|_{\infty,\Gamma_1} ,\quad \| \upsilon\|_{\infty,D_2 \backslash D_1} \leq C \|\varphi\|_{\infty,\Gamma_1}.
+$$
+\end{theorem}
+
+
+\section{Зведення до системи ІР }
+\hspace*{\parindent} Використовуючи результати попередніх підрозділів, подамо розв'язок задачі (\ref{Laplace})-(\ref{Neuman}) у вигляді комбінації потенціалів подвійного шару
+\begin{equation}
+\label{solution}
+    u(x) = \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \int_{\Gamma _2} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y), \quad x \in D,
+\end{equation}
+тоді отримуємо наступний результат виражений у теоремі.
+\begin{theorem}
+Функція (\ref{solution}) є розв'язком задачі Коші (\ref{Laplace})-(\ref{Neuman}), якщо густини $\varphi_1$ і $\varphi_2$ задовольняють систему:
+ \begin{equation}
+\label{2.3}
+    \begin{cases}
+        \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \frac{1}{2}\varphi_2(x) + \int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =f(x) \quad x \in \Gamma_2\\
+       \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial\nu \nu(y)}ds(y) + \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =g(x) \quad x \in \Gamma_2\\
+    \end{cases}
+\end{equation}.
+\end{theorem}
+
+\begin{equation}
+\label{2.4}
+     \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y)=\int_{\Gamma_2}\frac{\partial\varphi_2}{\partial Q}(y) \frac{\Phi(x,y)}{\partial Q(x)}
+\end{equation}
+
+\begin{equation}
+\frac{\partial\Phi(x,y)}{\partial\nu(y)} = \frac{1}{2\pi}\frac{(x-y,\nu(y))}{|x-y|^2}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\label{2.5}
+    \Gamma_1 &:= \big\{\eta(t) = (\eta_1(t),\eta_2(t)), \quad t \in [0, 2\pi]\big\}\\
+    \Gamma_2 &:= \big\{\sigma(t) = (\sigma_1(t),\sigma_2(t)), \quad t \in [0, 2\pi]\big\}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\label{2.6}
+   \nu(\sigma(t))=\Big(\frac{\sigma_2^{'}(t)}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}+
+   \frac{-\sigma_1^{'}(t)}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}\Big)
+\end{equation}
+
+\begin{equation}
+\label{2.7}
+   Q(\sigma(t))=\frac{1}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}\Big(\sigma_1^{'}(t),\sigma_2^{'}(t)\Big)
+\end{equation}
+
+\begin{equation}
+\label{2.8}
+    \begin{cases}
+        \displaystyle\int_0^{2\pi}\Big\{ H_{11}(t,\tau)\mu_1(\tau)+\frac{1}{2}\mu_2(t) +
+        H_{12}(t,\tau)\mu_2(\tau)\Big\}d\tau = f(\sigma(t)),\\
+         \displaystyle\int_0^{2\pi}\Big\{ H_{21}(t,\tau)\mu_1(\tau) + \frac{1}{2\pi}\mu_2^{'}(\tau)\cos\big(\frac{t-\tau}{2}\big) + \mu(\tau)\frac{1}{2\sin^2\big(\frac{t-\tau}{2})}H_{22}(t,\tau)\Big\}d\tau=g(\sigma(t))
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+\label{H11}
+   H_{11}(t,\tau)=\frac{1}{2\pi}\frac{\langle\sigma(t)-\eta(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}
+\end{equation}
+
+\begin{equation}
+\label{H12}
+H_{12}(t,\tau) =
+    \begin{cases}
+        \frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}, \quad t \neq \tau.\\
+        \frac{1}{2\pi}\frac{\langle\sigma^{''}(t), \nu(\sigma(t))\rangle}{|\sigma^{'}(t)|^2},  \quad t = \tau
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+\label{H21}
+    H_{21}(t,\tau) = \frac{1}{2\pi}\Bigg(\frac{\langle\nu(\eta(\tau)), \nu(\sigma(t))\rangle}{|\sigma(t)-(\eta(\tau))|^2} - \frac {2\langle\sigma(t)-\eta(\tau), \nu(\eta(\tau))\rangle\langle\sigma(t)-\eta(\tau),\nu(\sigma(t))\rangle}{|\sigma(t)-\eta(\tau)|^4}\Bigg)
+\end{equation}
+
+\begin{equation}
+\label{H22}
+     H_{22}(t,\tau) =
+     \begin{cases}
+     -1 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
+     -\frac{1}{2} , \quad t = \tau.
+     \end{cases}
+\end{equation}
+\\Оскільки
+\begin{equation}
+\label{2.9}
+    \displaystyle\int_0^{2\pi}\mu_2(\tau)\ctg(\frac{t-\tau}{2})d\tau = -\int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin(\frac{t-\tau}{2})}d\tau
+\end{equation}
+\\
+\begin{equation}
+\label{2.8}
+    \begin{cases}
+        \displaystyle \frac{1}{2\pi}\int_0^{2\pi}\Big\{ H_{01}(t,\tau)\psi_0(\tau)+\Big[-\frac{1}{2}\ln\Big(\frac{4}{e}\sin^2 \frac{t-\tau}{2}\Big)+\tilde H_{11}(t,\tau)\Big]\psi_1(\tau) \Big\}d\tau = f_1(x_1(t)),\\
+        \displaystyle \frac{1}{2\pi}\int_0^{2\pi}\Big\{ K_{01}(t,\tau)\psi_0(\tau)+ K_{11}(t, \tau)\psi_1(\tau)\Big\}d\tau + \frac{\psi_1(t)}{2|x_1^{'}(t)|}= f_2(x_1(t)),
+    \end{cases}
+\end{equation}
+$\psi_i(t) = \mu_i(x_i(t))|x_i^{'}(t)|$, $i=0,1$, $t \in [0, 2\pi]$.
+де
+\begin{equation}
+\label{2.9}
+    H_22^(1)(t,\tau)=\frac{1}{2\pi}=
+     \begin{cases}
+     -2 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
+     -\frac{3}{2} , \quad t = \tau.
+     \end{cases}
+\end{equation}
+\section{Метод тригонометричних квадратур}
+\hspace*{\parindent} Чисельне розв’язування інтегрального рівняння (\ref{field_equation_param_final}) здійснимо методом квадратур \cite{Chapko_Kress}. Для цього на розбитті $t_i := \frac{i\pi}{n},\quad i =0,..,2n-1, n \in \mathbb{N}$  розглянемо такі квадратурні формули:
+\begin{equation}
+\label{quadrFormul1}
+\frac{1}{2\pi}\int_0^{2\pi} \, f(\tau) d\tau \approx\frac{1}{2n}\sum_{j=0}^{2n-1}f(t_j)
+\end{equation}
+\begin{equation}
+\label{quadrFormul2}
+\frac{1}{2\pi}\int_0^{2\pi} \, f(\tau)\ln{(\frac{4}{e}\sin^2{\frac{t-\tau}{2}})} d\tau \approx\sum_{j=0}^{2n-1}f(t_j)R^n_j(t)
+\end{equation}
+\begin{equation}
+\label{quadrFormul3}
+\frac{1}{2\pi}\int_0^{2\pi} \, \frac{f(\tau)}{2\sin^2{\frac{t-\tau}{2}}} d\tau \approx\sum_{j=0}^{2n-1}f(t_j)T^n_j(t)
+\end{equation}
+з ваговими функціями
+$$
+R^n_j(t) := -\frac{1}{2n}\{1+ 2\sum_{m=1}^{n-1}{\frac{1}{m}\cos{m(t-t_j)}} + \frac{\cos{n(t-t_j)}}{n}\},
+$$
+$$
+T^n_j(t) := -\frac{1}{n}\sum_{m=1}^{n-1}{m\cos{m(t-t_j)}} + \frac{\cos{n(t-t_j)}}{2}.
+$$
+Ці формули отримані з використанням тригонометричної інтерполяції для гладкої частини $f$ підінтегральної функції і подальшого точного інтегрування \cite{Kress}. Після застосування виписаних квадратурних правил (\ref{quadrFormul2}) до інтеграла в лівій частині рівняння (\ref{field_equation_param_final}) і (\ref{quadrFormul1}) до другого доданку у функції $F$ у рівнянні (\ref{field_equation_param_final}), оскільки $\omega$ задається формулою (\ref{omega}), і колокації у вузлах квадратурних формул отримаємо таку систему лінійних рівнянь розмірністю $2n\times2n$:
+\begin{equation}
+\label{2.12}
+  \begin{cases}
+       \frac{\pi}{n}\sum_{j=0}{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} + \frac{\pi}{n}\sum_{j=1}{2n-1}\mu2(t_j)H_{22}(t_i,t_j)=f
+    \end{cases}
+\end{equation}
+щодо невідомих значень $\mu_{1j} \approx \mu_1(t_j)$ і $\mu_{2j} \approx \mu_2(t_j)$, де
+$$
+R_j := -\frac{2\pi}{n}\sum_{m=1}^{n-1}{\frac{1}{m}\cos{\frac{mj\pi}{n}}} + \frac{(-1)^j\pi}{n^2}.
+$$
+\hspace*{\parindent}У праці \cite{Chapko_Kress} на підставі теорії колективно компактних операторів досліджено збіжність і похибку пропонованого методу. Зокрема, якщо $\Gamma_2 \in C^\infty$ і $F \in C^{p+1}$,  то має місце оцінка $\|\tilde{\mu_n} - \mu\|_{0,\alpha}\leq Cn^{-p}$, де $\tilde{\mu_n}$ - тригонометричний поліном побудований за допомогою значень $\mu_j$, знайдених з системи (\ref{field_equation_system}). Отже цей метод належить до алгоритмів без насичення,тобто його точність пов’язана із гладкістю вхідних даних. Зауважимо, що за аналітичності $\Gamma_2$  і $F$ отримуємо експоненційну збіжність.
+
+\section{Регуляризація Тіханова}
+\hspace*{\parindent}Метод регуляризації Тіхонова - алгоритм, що дозволяє знаходити наближений розв'язок некоректних операторних рівнянь виду $Ma=b$. Був розроблений А.Н. Тіхоновим в 1965 р .Основна ідея полягає в знаходженні наближеного розв'язку рівняння $Ma=b$ у вигляді $x_{\delta} = R(b_{\delta}, \lambda)$, де $R(b_{\delta},\lambda)$ - регуляризуючий оператор, де $\lambda$ - параметр регуляризації. Він повинен гарантувати, що при наближенні $b_{\delta}$ до точного значення $b_{T}$ при $\delta \rightarrow 0$ наближений розв'язок $a_{\delta}$ прямує до бажаного точного розв'язку $a_{T}$ рівняння $Ma = b_{T}$.\\
+\hspace*{\parindent} У нашому випадку для у якості регуляризованого розв'язку рівняння $Ma=b$, де $M$ - матриця $2n\times2n$ і $b \in \mathbb{R}^{2n}$, братимемо розв'язок, який мінімізує наступний вираз:
+$$
+  a_{\lambda} = \arg\min{\|Ma_{\lambda} -b \|^{2}_2 + \lambda\|a_\lambda\|^{2}_2},
+$$
+що еквівалетно розв'язку такої системи:
+ \begin{equation}
+  (M^TM + \lambda I)a_\lambda = M^Tb
+ \end{equation}
+ де $M^T$- транспонована матриця $M$.
+\newpage
+\chapter*{Висновок} \addcontentsline{toc}{chapter}{Висновок}
+\hspace*{\parindent}У даній роботі розглянуто метод граничних інтегральних рівнянь для наближеного розв'язування задачі Коші для рівняння Лапласа. Показано її некоректність. З використанням властивостей потенціалів простого шару отримано систему ІР з гладкими і сингулярними підінтегральними функціями. Далі задачу Коші перетворено у систему лінійних алгебричних рівнянь, шляхом параметризації та наближеного обчислення інтегралів за допомогою відповідних тригонометричних квадратурних формул. До отриманої некоректної системи лінійних алгебраїчних рівнянь застосовано метод регуляризації Тіханова.\\
+\hspace*{\parindent}Проведено чисельне розв'язування задачі у двозв'язній області з використанням мови програмування R.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\renewcommand{\bibname}{Список літератури}
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{Список літератури}
+
+ \bibitem{Chapko_Kress}
+\emph{Chapko R.,Kress R.} On a quadrature method for a logarithmic integral equation of the first kind// World of Scientific Series in Applicable Analisis -Vol.2 Contributions in Numerical Mathematics (Agarwal, ed.) World Scientific, Singapore, 1993. P.127-140.
+
+\bibitem{Kress}
+\emph{Kress R.} Linear Integral Equations, 2nd. ed. /R. Kress - New York: Springer-Verlag ,Heidelberg, 1999. - 367 p.
+
+\end{thebibliography}
+\end{document} 
