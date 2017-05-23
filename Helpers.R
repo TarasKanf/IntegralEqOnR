@@ -9,7 +9,7 @@ Helpers <- module({
     sqrt(sum(vec*vec))
   }
   
-  hiperSingualtCoeff <- function (t, n, tj) {
+  hiperSingularCoeff <- function (t, n, tj) {
     sum <- 0
     delta_t <- t - tj
     for (i in 1:(n-1))

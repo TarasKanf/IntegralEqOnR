@@ -42,6 +42,9 @@ ProblemState <- module({
   outerCurveDeriv <- function (t) {
     c(-outerRadius*sin(t), outerRadius*cos(t))
   }
+  outerCurveDerivSecond <- function (t) {
+    c(-outerRadius * cos(t), -outerRadius * sin(t))
+  }
   outerCurveNormVec <- function (t) {
     vecNorm <- Helpers$vectorNorm(outerCurve(t))
     deriv <- outerCurveDeriv(t)
@@ -50,51 +53,77 @@ ProblemState <- module({
   
   # core functions
   H11 <- function (t, tau) {
+    curveDeviation <- outerCurve(t) - innerCurve(tau)
+    numerator <- Helpers$scalarProduct(curveDeviation, innerCurveNormVec(tau))
+    denominator <- Helpers$vectorNorm(curveDeviation)^2
+    numerator/denominator/(2*pi)
+  }
+  
+  H12 <- function (t, tau) {
+    result <- 0
+    if(abs(t-tau) > eps){
+      curveDeviation <- outerCurve(t) - outerCurve(tau)
+      numerator <- Helpers$scalarProduct(curveDeviation, outerCurveNormVec(tau))
+      denominator <- Helpers$vectorNorm(curveDeviation)^2
+      result <- numerator/denominator/(2*pi)
+    } else {
+      numerator <- Helpers$scalarProduct(outerCurveDerivSecond(t), outerCurveNormVec(t))
+      denominator <- 2 * Helpers$vectorNorm(outerCurveDeriv(t))^2
+      result <- numerator/denominator/(2*pi)
+    }
+    result
+  }
+  
+  H11Sol <- function (t, tau) {
+    result <- 0
+    if(abs(t-tau) > eps){
+      curveDeviation <- innerCurve(t) - innerCurve(tau)
+      numerator <- Helpers$scalarProduct(curveDeviation, innerCurveNormVec(tau))
+      denominator <- Helpers$vectorNorm(curveDeviation)^2
+      result <- numerator/denominator/(2*pi)
+    } else {
+      numerator <- Helpers$scalarProduct(innerCurveDerivSecond(t), innerCurveNormVec(t))
+      denominator <- 2 * Helpers$vectorNorm(innerCurveDeriv(t))^2
+      result <- numerator/denominator/(2*pi)
+    }
+    result
+  }
+  
+  H12Sol <- function (t, tau) {
     curveDeviation <- innerCurve(t) - outerCurve(tau)
     numerator <- Helpers$scalarProduct(curveDeviation, outerCurveNormVec(tau))
     denominator <- Helpers$vectorNorm(curveDeviation)^2
     numerator/denominator/(2*pi)
   }
   
-  H12 <- function (t, tau) {
-    if(abs(t-tau) > eps){
-      curveDeviation <- innerCurve(t) - innerCurve(tau)
-      numerator <- Helpers$scalarProduct(curveDeviation, innerCurveNormVec(tau))
-      denominator <- Helpers$vectorNorm(curveDeviation)^2
-      numerator/denominator/(2*pi)
-    } else {
-      numerator <- Helpers$scalarProduct(innerCurveDerivSecond(t), innerCurveNormVec(t))
-      denominator <- Helpers$vectorNorm(innerCurveDeriv(t))^2
-      numerator/denominator/(2*pi)
-    }
-  }
-  
   H21 <- function (t, tau) {
-    curveDeviation <- innerCurve(t) - outerCurve(tau)
-    numerator1 <- Helpers$scalarProduct(outerCurveNormVec(tau), innerCurveNormVec(t))
+    curveDeviation <- outerCurve(t) - innerCurve(tau)
+    numerator1 <- Helpers$scalarProduct(innerCurveNormVec(tau), outerCurveNormVec(t))
     denominator1 <- Helpers$vectorNorm(curveDeviation)^2
-    prod21 <- 2 * Helpers$scalarProduct(curveDeviation, outerCurveNormVec(tau))
-    numerator2 <- prod21 * Helpers$scalarProduct(curveDeviation, innerCurveNormVec(t))
+    prod21 <- 2 * Helpers$scalarProduct(curveDeviation, innerCurveNormVec(tau))
+    numerator2 <- prod21 * Helpers$scalarProduct(curveDeviation, outerCurveNormVec(t))
     denominator2 <- Helpers$vectorNorm(curveDeviation)^4
     
-    (numerator1/denominator1 + numerator2/denominator2)/(2*pi)
+    (numerator1/denominator1 - numerator2/denominator2)/(2*pi)
   }
   
   H22 <- function(t, tau) {
+    result <- 0
     if(abs(t-tau) > eps){
-      curveDeviation <- innerCurve(t) - innerCurve(tau)
+      curveDeviation <- outerCurve(t) - outerCurve(tau)
       deviationNorm = Helpers$vectorNorm(curveDeviation)
-      prod11 <- Helpers$scalarProduct(curveDeviation, innerCurveDeriv(tau))
-      prod12 <- Helpers$scalarProduct(curveDeviation, innerCurveDeriv(t))
+      prod11 <- Helpers$scalarProduct(curveDeviation, outerCurveDeriv(tau))
+      prod12 <- Helpers$scalarProduct(curveDeviation, outerCurveDeriv(t))
       numerator1 <- 4 * prod11 * prod12 * sin((t-tau)/2)^2
-      denominator1 <- deviationNorm^4
-      prod2 <- Helpers$scalarProduct(innerCurveDeriv(tau),innerCurveDeriv(t))
-      numerator2 <- prod2 * sin((t-tau)/2)^2
-      denominator2 <- deviationNorm^2
+      denominator1 <- Helpers$vectorNorm(outerCurve(t)) * deviationNorm^4
+      prod2 <- Helpers$scalarProduct(outerCurveDeriv(tau),outerCurveDeriv(t))
+      numerator2 <- prod2 * 2 * sin((t-tau)/2)^2
+      denominator2 <- Helpers$vectorNorm(outerCurve(t)) * deviationNorm^2
       
-      (-2 + numerator1/denominator1 + numerator2/denominator2)/(2*pi)
+      result <- (numerator1/denominator1 - numerator2/denominator2)/(2*pi)
     } else {
-      -3/2/(2*pi)
+      result <- -1/Helpers$vectorNorm(outerCurve(t))/(2 * pi)
     }
+    result
   }
 })
