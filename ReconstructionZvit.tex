@@ -257,10 +257,10 @@ $\psi_i(t) = \mu_i(x_i(t))|x_i^{'}(t)|$, $i=0,1$, $t \in [0, 2\pi]$.
 де
 \begin{equation}
 \label{2.9}
-    H_22^(1)(t,\tau)=\frac{1}{2\pi}=
+    H_{22}^{(1)}(t,\tau)=\frac{1}{2\pi}=
      \begin{cases}
-     -2 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
-     -\frac{3}{2} , \quad t = \tau.
+        \textstyle -2 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} \textstyle\times\\\times 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
+        \textstyle -\frac{3}{2} , \quad t = \tau.
      \end{cases}
 \end{equation}
 \section{Метод тригонометричних квадратур}
@@ -288,7 +288,8 @@ $$
 \begin{equation}
 \label{2.12}
   \begin{cases}
-       \frac{\pi}{n}\sum_{j=0}{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} + \frac{\pi}{n}\sum_{j=1}{2n-1}\mu2(t_j)H_{22}(t_i,t_j)=f
+      \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} \\+ \displaystyle\frac{\pi}{n}\sum_{j=1}^{2n-1}\mu2(t_j)H_{22}(t_i,t_j)=f(\sigma(t_i))\\
+        \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{21}(t_i)(t_j)\\+2\pi\sum_{j=0}^{2n-1}\mu_2(t_j)T_j^n(t_i)H_{22}^{(1)}(t_i,t_j)=q(\sigma(t_i))
     \end{cases}
 \end{equation}
 щодо невідомих значень $\mu_{1j} \approx \mu_1(t_j)$ і $\mu_{2j} \approx \mu_2(t_j)$, де
@@ -308,6 +309,24 @@ $$
   (M^TM + \lambda I)a_\lambda = M^Tb
  \end{equation}
  де $M^T$- транспонована матриця $M$.
+\section{Подання Розв'язку}
+$u$  на $\Gamma_1$
+\begin{equation}
+u(x)=\frac{1}{2}\varphi_1(x) + \int_{\Gamma_1}\varphi_1(y)\frac{\partial\Phi(x,y)}{\partial\nu(y)}ds(y) +\int_{\Gamma_2}\varphi_2(y)\frac{\partial\Phi(x,y)}{\partial\nu(y)}ds(y)
+\end{equation}
+\begin{equation}
+u(t_i)=\frac{\mu_1(t_i)}{2|\eta^{'}(t)|} + \frac{\pi}{n}\sum_{j=0}^{2n-1} \mu_1(t_j)H_{11}^{(1)}(t_i,t_j)+\frac{\pi}{n}\sum_{j=0}^{2n-1} \mu_2(t_j)H_{12}^{(1)}(t_i,t_j)
+\end{equation}
+\begin{equation}
+    H_{11}^{(1)}(t,\tau)=
+    \begin{cases}
+       \displaystyle \frac{1}{2\pi} \frac{\langle\eta(t)-\eta(\tau),\nu(\eta(\tau))\rangle}{|\eta(t)-\eta(\tau)|^2} \quad , t\neq\tau\\
+       \displaystyle \frac{1}{2\pi} \frac{\langle\eta(t)^{''},\nu(\eta(\tau))\rangle}{2|\eta(t)^{'}|^2} \quad , t\doteq\tau
+    \end{cases}
+\end{equation}
+\begin{equation}
+H_{12}^{(1)}(t,\tau)=\frac{1}{2\pi}\frac{\langle\eta(t)-\sigma(\tau), \nu(\sigma(\tau))\rangle}{|\eta(t)-\sigma(\tau)|^2}
+\end{equation}
 \newpage
 \chapter*{Висновок} \addcontentsline{toc}{chapter}{Висновок}
 \hspace*{\parindent}У даній роботі розглянуто метод граничних інтегральних рівнянь для наближеного розв'язування задачі Коші для рівняння Лапласа. Показано її некоректність. З використанням властивостей потенціалів простого шару отримано систему ІР з гладкими і сингулярними підінтегральними функціями. Далі задачу Коші перетворено у систему лінійних алгебричних рівнянь, шляхом параметризації та наближеного обчислення інтегралів за допомогою відповідних тригонометричних квадратурних формул. До отриманої некоректної системи лінійних алгебраїчних рівнянь застосовано метод регуляризації Тіханова.\\
@@ -317,7 +336,6 @@ $$
 \renewcommand{\bibname}{Список літератури}
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Список літератури}
-
  \bibitem{Chapko_Kress}
 \emph{Chapko R.,Kress R.} On a quadrature method for a logarithmic integral equation of the first kind// World of Scientific Series in Applicable Analisis -Vol.2 Contributions in Numerical Mathematics (Agarwal, ed.) World Scientific, Singapore, 1993. P.127-140.
 
