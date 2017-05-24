@@ -84,6 +84,7 @@
 \end{equation}
 і відповідні граничні умови Діріхле і Неймана
 \begin{equation}
+\label{Dirichlet}
         u = f \quad \textup{на } D
 \end{equation}
 \begin{equation}
@@ -104,12 +105,12 @@ u(x) = \int\limits_{\Gamma_1} \, \varphi(y)\Phi(x,y) ds(y) , \quad x \in D_2\set
 \upsilon(x) = \int\limits_{\Gamma_1} \, \varphi(y)\frac{\Phi(x,y)}{\nu(y)} ds(y) , \quad x \in D_2\setminus\Gamma_1
 \end{equation}
 як модифіковані потенціали простого та подвійного шару з густиною $\varphi $ відповідно.\\
-\hspace*{\parindent} Тут $\Phi$ фундаментальний розв'язок рівняння Лапласа (\ref{Laplace}) в обмеженій області $D$
+\hspace*{\parindent} Тут $\Phi$ фундаментальний розв'язок рівняння Лапласа (\ref{Laplace}) в $\mathbb{R}^2$
 \begin{equation}
 \begin{split}
 \label{fundSol}
-    \Phi(x,y) & := -\frac{1}{2\pi}\ln |x-y| \\
-    |x-y| & =\sqrt{(x_1-y_1)^2 + (x_2-y_2)^2}
+    \Phi(x,y) & := -\frac{1}{2\pi}\ln |x-y|, \\
+    |x-y| & =\sqrt{(x_1-y_1)^2 + (x_2-y_2)^2},
 \end{split}
 \end{equation}
  $\nu$ - внутрішня нормаль до границі внутрішнього включення $\Gamma_1$.\\
@@ -144,26 +145,45 @@ $$
 \label{solution}
     u(x) = \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \int_{\Gamma _2} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y), \quad x \in D,
 \end{equation}
-тоді отримуємо наступний результат виражений у теоремі.
-\begin{theorem}
-Функція (\ref{solution}) є розв'язком задачі Коші (\ref{Laplace})-(\ref{Neuman}), якщо густини $\varphi_1$ і $\varphi_2$ задовольняють систему:
- \begin{equation}
-\label{2.3}
-    \begin{cases}
-        \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \frac{1}{2}\varphi_2(x) + \int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =f(x) \quad x \in \Gamma_2\\
-       \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial\nu \nu(y)}ds(y) + \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =g(x) \quad x \in \Gamma_2\\
-    \end{cases}
-\end{equation}.
-\end{theorem}
-
+з невідомими густинами $\varphi_1 \in C(\Gamma_1)$ і $\varphi_2 \in C(\Gamma_2)$.
+ Далі врахувавши подання розв'язку (\ref{solution}) і застосувавши формули стрибків потенціалів подвійного шару, легко бачити, наклавши умови Діріхле і Неймана, задачу (\ref{Laplace})-(\ref{Neuman}) можна звести до наступної системи граничних інтегральних рівнянь.
 \begin{equation}
-\label{2.4}
-     \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y)=\int_{\Gamma_2}\frac{\partial\varphi_2}{\partial Q}(y) \frac{\Phi(x,y)}{\partial Q(x)}
+\label{initEquation}
+    \begin{cases}
+        \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \frac{1}{2}\varphi_2(x) + \int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =f(x), \quad x \in \Gamma_2,\\
+       \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial\nu(x) \nu(y)}ds(y) + \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =g(x), \quad x \in \Gamma_2,\\
+    \end{cases}
 \end{equation}
+\hspace*{\parindent}Також з метою зменшення степеня сингулярності в гіперсингулярному інтегралі в системі (\ref{initEquation}) скористаємось рівністю
+\begin{equation}
+     \frac{\partial}{\partial\nu(x)}\int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y)=\int_{\Gamma_2}\frac{\partial\varphi_2}{\partial \Theta}(y) \frac{\Phi(x,y)}{\partial \Theta(x)}ds(y),\quad x \in \Gamma_2,
+\end{equation}
+доведення якої можна знайти у \cite{Kress}. Тут $\Theta$ - це одиничний вектор дотичної до $\Gamma_2$.\\
+\hspace*{\parindent}Тому система система інтегральних рівнянь (\ref{initEquation}) набуде вигляду
+\begin{equation}
+\label{system}
+    \begin{cases}
+        \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) + \frac{1}{2}\varphi_2(x) + \int_{\Gamma _2}\varphi(y)\frac{\partial \Phi(x,y)}{\partial \nu(y)}ds(y) =f(x), \quad x \in \Gamma_2,\\
+       \int_{\Gamma _1} \varphi_1(y)\frac{\partial \Phi(x,y)}{\partial\nu(x) \nu(y)}ds(y) + \int_{\Gamma_2}\frac{\partial\varphi_2}{\partial \Theta}(y) \frac{\Phi(x,y)}{\partial \Theta(x)}ds(y) =g(x), \quad x \in \Gamma_2,\\
+    \end{cases}
+\end{equation}
+
+\section{Параметризація}
+\hspace*{\parindent}Нехай границі $\Gamma_1$ і $\Gamma_2$ задаються параметрично як
+\begin{equation}
+\label{Gamma1}
+    \Gamma_1 := \big\{\eta(t)+ d := (\eta_1(t) + d_1, \eta_2(t) + d_2), \quad t \in [0, 2\pi]\big\},
+\end{equation}
+\begin{equation}
+\label{Gamma2}
+    \Gamma_2 := \big\{\sigma(t) + d := (\sigma_1(t) + d_1, \sigma_2(t) + d_2), \quad t \in [0, 2\pi]\big\},
+\end{equation}
+де точка $d=(d_1, d_2)$ вказує на відстань від початку координат. Функції $\sigma : [0, 2\pi] \rightarrow \mathbb{R}^2$ та $\eta : [0, 2\pi] \rightarrow \mathbb{R}^2$ - $2\pi$-періодичні, належать класу $C^2[0,\pi]$, є ін'єктивними і такі, що $\sigma'(t) \neq 0$ та $\eta'(t) \neq 0$ $ \forall t\in [0,\pi]$.
 
 \begin{equation}
 \frac{\partial\Phi(x,y)}{\partial\nu(y)} = \frac{1}{2\pi}\frac{(x-y,\nu(y))}{|x-y|^2}
 \end{equation}
+
 
 \begin{equation}
 \begin{split}
