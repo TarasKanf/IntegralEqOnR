@@ -179,29 +179,51 @@ $$
     \Gamma_2 := \big\{\sigma(t) + d := (\sigma_1(t) + d_1, \sigma_2(t) + d_2), \quad t \in [0, 2\pi]\big\},
 \end{equation}
 де точка $d=(d_1, d_2)$ вказує на відстань від початку координат. Функції $\sigma : [0, 2\pi] \rightarrow \mathbb{R}^2$ та $\eta : [0, 2\pi] \rightarrow \mathbb{R}^2$ - $2\pi$-періодичні, належать класу $C^2[0,\pi]$, є ін'єктивними і такі, що $\sigma'(t) \neq 0$ та $\eta'(t) \neq 0$ $ \forall t\in [0,\pi]$.
-
+\hspace*{\parindent}Тоді систему (\ref{system}) можна подати у параметризованому вигляді
 \begin{equation}
-\frac{\partial\Phi(x,y)}{\partial\nu(y)} = \frac{1}{2\pi}\frac{(x-y,\nu(y))}{|x-y|^2}
+\label{systemParamtrized}
+    \begin{cases}
+        \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{11}(t,\tau)d\tau + \frac{\mu_2(t)}{2|\sigma'(t)|} + \int_0^{2\pi}\mu_2(\tau)H_{12}(t,\tau)d\tau = f(\sigma(t)),\\
+         \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{21}(t,\tau)d\tau + \int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = g(\sigma(t)),
+    \end{cases}
 \end{equation}
-
-
+з гладкими $2\pi$-періодичними функціями
 \begin{equation}
-\begin{split}
-\label{2.5}
-    \Gamma_1 &:= \big\{\eta(t) = (\eta_1(t),\eta_2(t)), \quad t \in [0, 2\pi]\big\}\\
-    \Gamma_2 &:= \big\{\sigma(t) = (\sigma_1(t),\sigma_2(t)), \quad t \in [0, 2\pi]\big\}
-\end{split}
+\label{H11}
+   H_{11}(t,\tau)=\frac{1}{2\pi}\frac{\langle\sigma(t)-\eta(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}
 \end{equation}
-
 \begin{equation}
-\label{2.6}
-   \nu(\sigma(t))=\Big(\frac{\sigma_2^{'}(t)}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}+
-   \frac{-\sigma_1^{'}(t)}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}\Big)
+\label{H21}
+    H_{21}(t,\tau) = \frac{1}{2\pi}\Bigg(\frac{\langle\nu(\eta(\tau)), \nu(\sigma(t))\rangle}{|\sigma(t)-(\eta(\tau))|^2} - \frac {2\langle\sigma(t)-\eta(\tau), \nu(\eta(\tau))\rangle\langle\sigma(t)-\eta(\tau),\nu(\sigma(t))\rangle}{|\sigma(t)-\eta(\tau)|^4}\Bigg)
 \end{equation}
-
 \begin{equation}
-\label{2.7}
-   Q(\sigma(t))=\frac{1}{\sqrt{\sigma_1^2(t)+\sigma_2^2(t)}}\Big(\sigma_1^{'}(t),\sigma_2^{'}(t)\Big)
+\label{H12}
+H_{12}(t,\tau) =
+        \frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}, \quad t \neq \tau
+\end{equation}
+з діагональними елементами
+\begin{equation}
+\label{H12diagon}
+\lim_{\tau \to t}H_{12}(t,\tau) = \frac{1}{2\pi}\frac{\langle\sigma^{''}(t), \nu(\sigma(t))\rangle}{|\sigma^{'}(t)|^2}.
+\end{equation}
+і вектором нормалі та дотичної відповідно
+\begin{equation}
+\label{normalVector}
+   \nu(\sigma(t))=\frac{1}{|\sigma(t)|}\Big(\sigma_2^{'}(t),
+   -\sigma_1^{'}(t)\Big),
+\end{equation}
+\begin{equation}
+\label{Dotichna}
+   \Theta(\sigma(t))=\frac{1}{|\sigma(t)|}\Big(\sigma_1^{'}(t),\sigma_2^{'}(t)\Big).
+\end{equation}
+Підінтегральна функція
+\begin{equation}
+\label{K22}
+K_{22}(t,\tau) = -\frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\Theta(\sigma(\tau))\rangle}{|\sigma(t)-\sigma(\tau)|^2},
+\end{equation}
+містить гіперсингулярну особливість для виділення якої здійснимо наступні перетворення
+\begin{equation}
+\int_0^{2\pi}\mu_1(\tau)H_{21}(t,\tau)d\tau
 \end{equation}
 
 \begin{equation}
@@ -211,25 +233,6 @@ $$
         H_{12}(t,\tau)\mu_2(\tau)\Big\}d\tau = f(\sigma(t)),\\
          \displaystyle\int_0^{2\pi}\Big\{ H_{21}(t,\tau)\mu_1(\tau) + \frac{1}{2\pi}\mu_2^{'}(\tau)\cos\big(\frac{t-\tau}{2}\big) + \mu(\tau)\frac{1}{2\sin^2\big(\frac{t-\tau}{2})}H_{22}(t,\tau)\Big\}d\tau=g(\sigma(t))
     \end{cases}
-\end{equation}
-
-\begin{equation}
-\label{H11}
-   H_{11}(t,\tau)=\frac{1}{2\pi}\frac{\langle\sigma(t)-\eta(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}
-\end{equation}
-
-\begin{equation}
-\label{H12}
-H_{12}(t,\tau) =
-    \begin{cases}
-        \frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\nu(\eta(\tau))\rangle}{|\sigma(t)-\eta(\tau)|^2}, \quad t \neq \tau.\\
-        \frac{1}{2\pi}\frac{\langle\sigma^{''}(t), \nu(\sigma(t))\rangle}{|\sigma^{'}(t)|^2},  \quad t = \tau
-    \end{cases}
-\end{equation}
-
-\begin{equation}
-\label{H21}
-    H_{21}(t,\tau) = \frac{1}{2\pi}\Bigg(\frac{\langle\nu(\eta(\tau)), \nu(\sigma(t))\rangle}{|\sigma(t)-(\eta(\tau))|^2} - \frac {2\langle\sigma(t)-\eta(\tau), \nu(\eta(\tau))\rangle\langle\sigma(t)-\eta(\tau),\nu(\sigma(t))\rangle}{|\sigma(t)-\eta(\tau)|^4}\Bigg)
 \end{equation}
 
 \begin{equation}
