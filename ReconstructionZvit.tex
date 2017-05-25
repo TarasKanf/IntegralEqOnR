@@ -231,10 +231,10 @@ K_{22}(t,\tau) = -\frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\Theta(\sigm
 \int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = \int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin^2(\frac{t-\tau}{2})}H_{22}(t,\tau)d\tau,
 \end{equation}
 де $H_{22}$ - гладка $2\pi$-періодична функція
-\begin{equation}
-    H_{22}(t,\tau)=\frac{1}{\pi}( \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} -\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2})\sin^2(\frac{t-\tau}{2})
-\end{equation}
-з діагональними елементами 
+\begin{multline}
+    H_{22}(t,\tau)=\frac{1}{\pi}( \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4}\\ -\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2})\sin^2(\frac{t-\tau}{2})
+\end{multline}
+з діагональними елементами
 \begin{equation}
     \lim_{\tau \to t}H_{22}(t,\tau)=-\frac{1}{2\pi|\sigma(t)|}.
 \end{equation}
@@ -304,8 +304,9 @@ $$
 \begin{equation}
 \label{2.12}
   \begin{cases}
-      \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} \\+ \displaystyle\frac{\pi}{n}\sum_{j=1}^{2n-1}\mu2(t_j)H_{22}(t_i,t_j)=f(\sigma(t_i))\\
-        \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{21}(t_i)(t_j)\\+2\pi\sum_{j=0}^{2n-1}\mu_2(t_j)T_j^n(t_i)H_{22}^{(1)}(t_i,t_j)=q(\sigma(t_i))
+      \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} \\+ \displaystyle\frac{\pi}{n}\sum_{j=1}^{2n-1}\mu_2(t_j)H_{22}(t_i,t_j)=f(\sigma(t_i))\\
+        \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{21}(t_i)(t_j)\\
+         \displaystyle+2\pi\sum_{j=0}^{2n-1}\mu_2(t_j)T_j^n(t_i)H_{22}^{(1)}(t_i,t_j)=q(\sigma(t_i))
     \end{cases}
 \end{equation}
 щодо невідомих значень $\mu_{1j} \approx \mu_1(t_j)$ і $\mu_{2j} \approx \mu_2(t_j)$, де
