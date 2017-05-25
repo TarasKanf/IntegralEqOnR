@@ -221,9 +221,22 @@ H_{12}(t,\tau) =
 \label{K22}
 K_{22}(t,\tau) = -\frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\Theta(\sigma(\tau))\rangle}{|\sigma(t)-\sigma(\tau)|^2},
 \end{equation}
-містить гіперсингулярну особливість для виділення якої здійснимо наступні перетворення
+містить гіперсингулярну особливість для виділення якої здійснимо наступні перетворення скориставшись формулою інтегрування частинами і врахувавши $2\pi$-періодичність функцій $K_{22}$ та $\mu_2$
 \begin{equation}
-\int_0^{2\pi}\mu_1(\tau)H_{21}(t,\tau)d\tau
+\int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = -\int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin^2(\frac{t-\tau}{2})}\{{K_{22}}_t'(t,\tau)2\sin^2(\frac{t-\tau}{2})\}d\tau.
+\end{equation}
+Далі скористаємось правилом Лопіталя, обчислимо необхідні похідні і отримаємо тотожність
+\begin{equation}
+\label{H22inEq}
+\int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = \int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin^2(\frac{t-\tau}{2})}H_{22}(t,\tau)d\tau,
+\end{equation}
+де $H_{22}$ - гладка $2\pi$-періодична функція
+\begin{equation}
+    H_{22}(t,\tau)=\frac{1}{\pi}( \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} -\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2})\sin^2(\frac{t-\tau}{2})
+\end{equation}
+з діагональними елементами 
+\begin{equation}
+    \lim_{\tau \to t}H_{22}(t,\tau)=-\frac{1}{2\pi|\sigma(t)|}.
 \end{equation}
 
 \begin{equation}
