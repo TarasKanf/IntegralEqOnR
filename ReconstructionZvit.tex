@@ -183,10 +183,11 @@ $$
 \begin{equation}
 \label{systemParamtrized}
     \begin{cases}
-        \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{11}(t,\tau)d\tau + \frac{\mu_2(t)}{2|\sigma'(t)|} + \int_0^{2\pi}\mu_2(\tau)H_{12}(t,\tau)d\tau = f(\sigma(t)),\\
-         \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{21}(t,\tau)d\tau + \int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = g(\sigma(t)),
+        \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{11}(t,\tau)d\tau + \frac{\mu_2(t)}{2|\sigma'(t)|} + \int_0^{2\pi}\mu_2(\tau)H_{12}(t,\tau)d\tau = f(\sigma(t)),\, t \in [0,2\pi]\\
+         \displaystyle\int_0^{2\pi}\mu_1(\tau)H_{21}(t,\tau)d\tau + \int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = g(\sigma(t)),\, t \in [0,2\pi]
     \end{cases}
 \end{equation}
+$$\mu_1(\tau) = \varphi_1(\eta(\tau))|\eta'(\tau)| \quad \mu_2(\tau) = \varphi_2(\sigma(\tau))|\sigma'(\tau)|$$
 з гладкими $2\pi$-періодичними функціями
 \begin{equation}
 \label{H11}
@@ -216,12 +217,12 @@ H_{12}(t,\tau) =
 \label{Dotichna}
    \Theta(\sigma(t))=\frac{1}{|\sigma(t)|}\Big(\sigma_1^{'}(t),\sigma_2^{'}(t)\Big).
 \end{equation}
-Підінтегральна функція
+\hspace*{\parindent}Підінтегральна функція
 \begin{equation}
 \label{K22}
 K_{22}(t,\tau) = -\frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\Theta(\sigma(\tau))\rangle}{|\sigma(t)-\sigma(\tau)|^2},
 \end{equation}
-містить гіперсингулярну особливість для виділення якої здійснимо наступні перетворення скориставшись формулою інтегрування частинами і врахувавши $2\pi$-періодичність функцій $K_{22}$ та $\mu_2$
+містить гіперсингулярну особливість, для виділення якої здійснимо наступні перетворення, скориставшись формулою інтегрування частинами і врахувавши $2\pi$-періодичність функцій $K_{22}$ та $\mu_2$,
 \begin{equation}
 \int_0^{2\pi}\mu_2'(\tau)K_{22}(t,\tau)d\tau = -\int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin^2(\frac{t-\tau}{2})}\{{K_{22}}_t'(t,\tau)2\sin^2(\frac{t-\tau}{2})\}d\tau.
 \end{equation}
@@ -238,56 +239,20 @@ K_{22}(t,\tau) = -\frac{1}{2\pi}\frac{\langle\sigma(t)-\sigma(\tau),\Theta(\sigm
 \begin{equation}
     \lim_{\tau \to t}H_{22}(t,\tau)=-\frac{1}{2\pi|\sigma(t)|}.
 \end{equation}
-
+\hspace*{\parindent}Таким чином систему некоректних інтегральних рівнянь було зведено до наступного вигляду
 \begin{equation}
-\label{2.8}
+\label{systemParamFinal}
     \begin{cases}
-        \displaystyle\int_0^{2\pi}\Big\{ H_{11}(t,\tau)\mu_1(\tau)+\frac{1}{2}\mu_2(t) +
-        H_{12}(t,\tau)\mu_2(\tau)\Big\}d\tau = f(\sigma(t)),\\
-         \displaystyle\int_0^{2\pi}\Big\{ H_{21}(t,\tau)\mu_1(\tau) + \frac{1}{2\pi}\mu_2^{'}(\tau)\cos\big(\frac{t-\tau}{2}\big) + \mu(\tau)\frac{1}{2\sin^2\big(\frac{t-\tau}{2})}H_{22}(t,\tau)\Big\}d\tau=g(\sigma(t))
+        \displaystyle\frac{1}{2}\mu_2(t) + \int_0^{2\pi}\Big\{\mu_1(\tau) H_{11}(t,\tau)+
+        \mu_2(\tau)H_{12}(t,\tau)\Big\}d\tau = f(\sigma(t)),\\
+         \displaystyle\int_0^{2\pi}\Big\{ \mu_1(\tau)H_{21}(t,\tau) + \mu(\tau)\frac{1}{2\sin^2\big(\frac{t-\tau}{2})}H_{22}(t,\tau)\Big\}d\tau=g(\sigma(t))
     \end{cases}
-\end{equation}
-
-\begin{equation}
-\label{H22}
-     H_{22}(t,\tau) =
-     \begin{cases}
-     -1 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
-     -\frac{1}{2} , \quad t = \tau.
-     \end{cases}
-\end{equation}
-\\Оскільки
-\begin{equation}
-\label{2.9}
-    \displaystyle\int_0^{2\pi}\mu_2(\tau)\ctg(\frac{t-\tau}{2})d\tau = -\int_0^{2\pi}\mu_2(\tau)\frac{1}{2\sin(\frac{t-\tau}{2})}d\tau
-\end{equation}
-\\
-\begin{equation}
-\label{2.8}
-    \begin{cases}
-        \displaystyle \frac{1}{2\pi}\int_0^{2\pi}\Big\{ H_{01}(t,\tau)\psi_0(\tau)+\Big[-\frac{1}{2}\ln\Big(\frac{4}{e}\sin^2 \frac{t-\tau}{2}\Big)+\tilde H_{11}(t,\tau)\Big]\psi_1(\tau) \Big\}d\tau = f_1(x_1(t)),\\
-        \displaystyle \frac{1}{2\pi}\int_0^{2\pi}\Big\{ K_{01}(t,\tau)\psi_0(\tau)+ K_{11}(t, \tau)\psi_1(\tau)\Big\}d\tau + \frac{\psi_1(t)}{2|x_1^{'}(t)|}= f_2(x_1(t)),
-    \end{cases}
-\end{equation}
-$\psi_i(t) = \mu_i(x_i(t))|x_i^{'}(t)|$, $i=0,1$, $t \in [0, 2\pi]$.
-де
-\begin{equation}
-\label{2.9}
-    H_{22}^{(1)}(t,\tau)=\frac{1}{2\pi}=
-     \begin{cases}
-        \textstyle -2 + \frac{2\langle\sigma(t)-\sigma(\tau),\sigma^{'}(\tau)\rangle\langle\sigma(t)-\sigma(\tau),\sigma^{'}(t)\rangle}{|\sigma(t)-\sigma(\tau)|^4} \textstyle\times\\\times 2\sin^2(\frac{(t-\tau)}{2})-\frac{\langle\sigma^{'}(t),\sigma^{'}(\tau)\rangle}{|\sigma(t)-\sigma(\tau)|^2}2\sin^2(\frac{t-\tau}{2}). \quad t \neq \tau  \\
-        \textstyle -\frac{3}{2} , \quad t = \tau.
-     \end{cases}
 \end{equation}
 \section{Метод тригонометричних квадратур}
-\hspace*{\parindent} Чисельне розв’язування інтегрального рівняння (\ref{field_equation_param_final}) здійснимо методом квадратур \cite{Chapko_Kress}. Для цього на розбитті $t_i := \frac{i\pi}{n},\quad i =0,..,2n-1, n \in \mathbb{N}$  розглянемо такі квадратурні формули:
+\hspace*{\parindent} Чисельне розв’язування системи інтегральних рівнянь(\ref{systemParamFinal}) здійснимо методом квадратур \cite{Chapko_Kress}. Для цього на розбитті $t_i := \frac{i\pi}{n},\quad i =0,..,2n-1, n \in \mathbb{N}$  розглянемо такі квадратурні формули:
 \begin{equation}
 \label{quadrFormul1}
 \frac{1}{2\pi}\int_0^{2\pi} \, f(\tau) d\tau \approx\frac{1}{2n}\sum_{j=0}^{2n-1}f(t_j)
-\end{equation}
-\begin{equation}
-\label{quadrFormul2}
-\frac{1}{2\pi}\int_0^{2\pi} \, f(\tau)\ln{(\frac{4}{e}\sin^2{\frac{t-\tau}{2}})} d\tau \approx\sum_{j=0}^{2n-1}f(t_j)R^n_j(t)
 \end{equation}
 \begin{equation}
 \label{quadrFormul3}
@@ -295,28 +260,22 @@ $\psi_i(t) = \mu_i(x_i(t))|x_i^{'}(t)|$, $i=0,1$, $t \in [0, 2\pi]$.
 \end{equation}
 з ваговими функціями
 $$
-R^n_j(t) := -\frac{1}{2n}\{1+ 2\sum_{m=1}^{n-1}{\frac{1}{m}\cos{m(t-t_j)}} + \frac{\cos{n(t-t_j)}}{n}\},
-$$
-$$
 T^n_j(t) := -\frac{1}{n}\sum_{m=1}^{n-1}{m\cos{m(t-t_j)}} + \frac{\cos{n(t-t_j)}}{2}.
 $$
-Ці формули отримані з використанням тригонометричної інтерполяції для гладкої частини $f$ підінтегральної функції і подальшого точного інтегрування \cite{Kress}. Після застосування виписаних квадратурних правил (\ref{quadrFormul2}) до інтеграла в лівій частині рівняння (\ref{field_equation_param_final}) і (\ref{quadrFormul1}) до другого доданку у функції $F$ у рівнянні (\ref{field_equation_param_final}), оскільки $\omega$ задається формулою (\ref{omega}), і колокації у вузлах квадратурних формул отримаємо таку систему лінійних рівнянь розмірністю $2n\times2n$:
+\hspace*{\parindent}Ці формули отримані з використанням тригонометричної інтерполяції для гладкої частини $f$ підінтегральної функції і подальшого точного інтегрування \cite{Kress}. Після застосування виписаних квадратурних правил (\ref{quadrFormul1})-(\ref{quadrFormul3}) до інтегралів у системі (\ref{systemParamFinal}) і колокації у вузлах квадратурних формул отримаємо таку систему лінійних рівнянь розмірністю $4n\times4n$:
 \begin{equation}
-\label{2.12}
+\label{systemDiscret}
   \begin{cases}
       \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{11}(t_i,t_j)+\frac{\mu_2(t_i)}{2|\sigma^{'}(t_i)|} \\+ \displaystyle\frac{\pi}{n}\sum_{j=1}^{2n-1}\mu2(t_j)H_{22}(t_i,t_j)=f(\sigma(t_i))\\
         \displaystyle \frac{\pi}{n}\sum_{j=0}^{2n-1}\mu_1(t_j)H_{21}(t_i)(t_j)\\+2\pi\sum_{j=0}^{2n-1}\mu_2(t_j)T_j^n(t_i)H_{22}^{(1)}(t_i,t_j)=q(\sigma(t_i))
     \end{cases}
 \end{equation}
-щодо невідомих значень $\mu_{1j} \approx \mu_1(t_j)$ і $\mu_{2j} \approx \mu_2(t_j)$, де
-$$
-R_j := -\frac{2\pi}{n}\sum_{m=1}^{n-1}{\frac{1}{m}\cos{\frac{mj\pi}{n}}} + \frac{(-1)^j\pi}{n^2}.
-$$
-\hspace*{\parindent}У праці \cite{Chapko_Kress} на підставі теорії колективно компактних операторів досліджено збіжність і похибку пропонованого методу. Зокрема, якщо $\Gamma_2 \in C^\infty$ і $F \in C^{p+1}$,  то має місце оцінка $\|\tilde{\mu_n} - \mu\|_{0,\alpha}\leq Cn^{-p}$, де $\tilde{\mu_n}$ - тригонометричний поліном побудований за допомогою значень $\mu_j$, знайдених з системи (\ref{field_equation_system}). Отже цей метод належить до алгоритмів без насичення,тобто його точність пов’язана із гладкістю вхідних даних. Зауважимо, що за аналітичності $\Gamma_2$  і $F$ отримуємо експоненційну збіжність.
+щодо невідомих значень $\mu_{1j} \approx \mu_1(t_j)$ і $\mu_{2j} \approx \mu_2(t_j)$.\\
+\hspace*{\parindent}У праці \cite{Chapko_Kress} на підставі теорії колективно компактних операторів досліджено збіжність і похибку пропонованого методу. Зокрема, якщо \\$\Gamma_2 \in C^\infty$ і $F \in C^{p+1}$,  то має місце оцінка $\|\tilde{\mu_n} - \mu\|_{0,\alpha}\leq Cn^{-p}$, де $\tilde{\mu_n}$ - тригонометричний поліном побудований за допомогою значень $\mu_j$, знайдених з системи (\ref{systemDiscret}). Отже цей метод належить до алгоритмів без насичення,тобто його точність пов’язана із гладкістю вхідних даних. Зауважимо, що за аналітичності $\Gamma_2$  і $F$ отримуємо експоненційну збіжність.
 
 \section{Регуляризація Тіханова}
 \hspace*{\parindent}Метод регуляризації Тіхонова - алгоритм, що дозволяє знаходити наближений розв'язок некоректних операторних рівнянь виду $Ma=b$. Був розроблений А.Н. Тіхоновим в 1965 р .Основна ідея полягає в знаходженні наближеного розв'язку рівняння $Ma=b$ у вигляді $x_{\delta} = R(b_{\delta}, \lambda)$, де $R(b_{\delta},\lambda)$ - регуляризуючий оператор, де $\lambda$ - параметр регуляризації. Він повинен гарантувати, що при наближенні $b_{\delta}$ до точного значення $b_{T}$ при $\delta \rightarrow 0$ наближений розв'язок $a_{\delta}$ прямує до бажаного точного розв'язку $a_{T}$ рівняння $Ma = b_{T}$.\\
-\hspace*{\parindent} У нашому випадку для у якості регуляризованого розв'язку рівняння $Ma=b$, де $M$ - матриця $2n\times2n$ і $b \in \mathbb{R}^{2n}$, братимемо розв'язок, який мінімізує наступний вираз:
+\hspace*{\parindent} У нашому випадку у якості регуляризованого розв'язку рівняння $Ma=b$, де $M$ - матриця $4n\times4n$ і $b \in \mathbb{R}^{4n}$, братимемо розв'язок, який мінімізує наступний вираз:
 $$
   a_{\lambda} = \arg\min{\|Ma_{\lambda} -b \|^{2}_2 + \lambda\|a_\lambda\|^{2}_2},
 $$
